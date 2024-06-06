@@ -20,6 +20,7 @@ const io = std.io;
 const posix = std.posix;
 const assert = std.debug.assert;
 const builtin = @import("builtin");
+const printArgs = @import("printArgs.zig");
 
 const wayland = @import("wayland");
 const wl = wayland.client.wl;
@@ -96,6 +97,7 @@ fn _main() !void {
     const control = globals.control orelse return error.RiverControlNotAdvertised;
     const seat = globals.seat orelse return error.SeatNotAdverstised;
 
+    try printArgs.print(result.args);
     for (result.args) |arg| control.addArgument(arg);
 
     const callback = try control.runCommand(seat);
